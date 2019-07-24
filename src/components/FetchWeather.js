@@ -47,21 +47,23 @@ class FetchWeather extends React.Component {
           <button type="submit">Submit</button>
         </form>
 
-        {this.state.weatherForecast.map((daily, index) => (
-          <div key={index}>
-            <div className="grid">
-              <div>
-                <h1>{daily.apparentTemperatureHigh}</h1>
-                <h4>High</h4>
+        <div className="weatherGrid">
+          {this.state.weatherForecast.map((daily, index) => (
+            <div key={index}>
+              <div className="grid">
+                <div>
+                  <h1>{daily.apparentTemperatureHigh}</h1>
+                  <h4>High</h4>
+                </div>
+                <div>
+                  <h1>{daily.temperatureLow}</h1>
+                  <h4>Low</h4>
+                </div>
               </div>
-              <div>
-                <h1>{daily.temperatureLow}</h1>
-                <h4>Low</h4>
-              </div>
+              <div className="summary">{daily.summary}</div>
             </div>
-            <div className="summary">{daily.summary}</div>
-          </div>
-        ))}
+          ))}
+        </div>
       </>
     );
   }
