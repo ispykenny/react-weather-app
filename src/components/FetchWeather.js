@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-
+import FormField from "../components/FormField";
 class FetchWeather extends React.Component {
   constructor(props) {
     super(props);
@@ -23,14 +23,14 @@ class FetchWeather extends React.Component {
         .catch(err => console.log(err));
 
     const getWeather = ({ latitude, longitude }) => {
-      axios(`https://weather-endpoint.herokuapp.com/?location=${latitude},${longitude}`)
+      axios(
+        `https://weather-endpoint.herokuapp.com/?location=${latitude},${longitude}`
+      )
         .then(res => {
-          console.log(res.data);
           this.setState({
             currentWeather: res.data.currently,
             weatherForecast: res.data.daily.data
           });
-          console.log(this.state.weatherForecast, "here");
         })
         .catch(err => console.log(err));
     };
@@ -42,11 +42,7 @@ class FetchWeather extends React.Component {
   render() {
     return (
       <>
-        <form onSubmit={this.fetchFormData}>
-          <input type="text" id="zip" />
-          <button type="submit">Submit</button>
-        </form>
-
+        <FormField handle={this.fetchFormData} />
         <div className="weatherGrid">
           {this.state.weatherForecast.map((daily, index) => (
             <div key={index}>
