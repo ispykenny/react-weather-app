@@ -26,6 +26,7 @@ class FetchWeather extends React.Component {
       axios(
         `https://weather-endpoint.herokuapp.com/?location=${latitude},${longitude}`
       )
+        .then()
         .then(res => {
           this.setState({
             currentWeather: res.data.currently,
@@ -42,7 +43,7 @@ class FetchWeather extends React.Component {
   render() {
     return (
       <>
-        <FormField handle={this.fetchFormData} />
+        <FormField onSubmit={this.fetchFormData} />
         <div className="weatherGrid">
           {this.state.weatherForecast.map((daily, index) => (
             <div key={index}>
