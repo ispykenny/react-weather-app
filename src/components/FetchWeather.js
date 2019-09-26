@@ -1,19 +1,21 @@
 import React from "react";
 import axios from "axios";
 import FormField from "../components/FormField";
+
 class FetchWeather extends React.Component {
   constructor(props) {
     super(props);
-    this.fetchFormData = this.fetchFormData.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       weather: [],
       weatherForecast: []
     };
   }
 
-  async fetchFormData(event) {
-    const zip = document.querySelector("#zip").value;
+  async handleSubmit(event) {
     event.preventDefault();
+    const zip = document.querySelector("#zip").value;
+    console.log('i did something')
 
     const getLoction = zip =>
       axios(
@@ -43,7 +45,9 @@ class FetchWeather extends React.Component {
   render() {
     return (
       <>
-        <FormField onSubmit={this.fetchFormData} />
+        <FormField 
+          onSubmit={this.handleSubmit} 
+        />
         <div className="weatherGrid">
           {this.state.weatherForecast.map((daily, index) => (
             <div key={index}>
