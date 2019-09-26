@@ -8,27 +8,38 @@ class FetchWeather extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       weather: [],
-      weatherForecast: []
+      weatherForecast: [],
+      city: '',
+      locationState: '',
+      userLocation: ''
     };
   }
 
   async handleSubmit(event) {
     event.preventDefault();
     const zip = document.querySelector("#zip").value;
-    console.log('i did something')
 
     const getLoction = zip =>
       axios(
         `https://public.opendatasoft.com/api/records/1.0/search/?dataset=us-zip-code-latitude-and-longitude&q=${zip}&facet=state&facet=timezone&facet=dst`
       )
-        .then(res => res.data.records[0].fields)
+        .then(response => {
+
+          let { city, state : locationState } = response.data.records[0].fields;
+
+          this.setState({
+            userLocation: city + ', ' + locationState
+          })
+
+          return response.data.records[0].fields;
+        })
         .catch(err => console.log(err));
+
 
     const getWeather = ({ latitude, longitude }) => {
       axios(
         `https://weather-endpoint.herokuapp.com/?location=${latitude},${longitude}`
       )
-        .then()
         .then(res => {
           this.setState({
             currentWeather: res.data.currently,
@@ -48,16 +59,20 @@ class FetchWeather extends React.Component {
         <FormField 
           onSubmit={this.handleSubmit} 
         />
+        <div>
+          
+          <h1> { this.state.userLocation } </h1>
+        </div>
         <div className="weatherGrid">
           {this.state.weatherForecast.map((daily, index) => (
-            <div key={index}>
-              <div className="grid">
+            <div key={index} className="grid">
+              <div>
                 <div>
-                  <h1>{daily.apparentTemperatureHigh}</h1>
+                  <h1>{Math.round(daily.apparentTemperatureHigh)}</h1>
                   <h4>High</h4>
                 </div>
                 <div>
-                  <h1>{daily.temperatureLow}</h1>
+                  <h1>{Math.round(daily.temperatureLow)}</h1>
                   <h4>Low</h4>
                 </div>
               </div>
