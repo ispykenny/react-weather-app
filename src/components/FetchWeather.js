@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import FormField from "../components/FormField";
+import Location from "../components/Location";
 
 class FetchWeather extends React.Component {
   constructor(props) {
@@ -56,13 +57,8 @@ class FetchWeather extends React.Component {
   render() {
     return (
       <>
-        <FormField 
-          onSubmit={this.handleSubmit} 
-        />
-        <div>
-          
-          <h1> { this.state.userLocation } </h1>
-        </div>
+        <FormField onSubmit={this.handleSubmit} />
+        <Location location={this.state.userLocation} />
         <div className="weatherGrid">
           {this.state.weatherForecast.map((daily, index) => (
             <div key={index} className="grid">

@@ -7,11 +7,12 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-}
 
-.grid {
-  width: 24%;
-  margin-bottom: 2em;
+  .grid {
+    width: 24%;
+    margin-bottom: 2em;
+  }
+
 }
 
 .grid:nth-child(odd) {
